@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional inline style for centering */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: lavenderblush;
+        }
+    </style>
+    <script>
+        var attemptCount = 0;
+
+        function validateForm() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            if (attemptCount >= 3) {
+                alert("Too many attempts. Please try again later.");
+                return false;
+            }
+
+            // Basic email validation using HTML5 pattern and JavaScript
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                attemptCount++;
+                return false;
+            }
+
+            if (password === "") {
+                alert("Password must be filled out");
+                attemptCount++;
+                return false;
+            }
+
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long");
+                attemptCount++;
+                return false;
+            }
+
+            var hasUpperCase = false;
+            var hasLowerCase = false;
+            var hasSpecialChar = false;
+            var specialCharacters = "!@#$%^&*()_+[]{}|;':,.<>/?`~";
+
+            for (var i = 0; i < password.length; i++) {
+                var char = password[i];
+                if (char >= 'A' && char <= 'Z') {
+                    hasUpperCase = true;
+                } else if (char >= 'a' && char <= 'z') {
+                    hasLowerCase = true;
+                } else if (specialCharacters.includes(char)) {
+                    hasSpecialChar = true;
+                }
+            }
+
+            if (!hasUpperCase) {
+                alert("Password must contain at least one uppercase letter");
+                attemptCount++;
+                return false;
+            }
+
+            if (!hasLowerCase) {
+                alert("Password must contain at least one lowercase letter");
+                attemptCount++;
+                return false;
+            }
+
+            if (!hasSpecialChar) {
+                alert("Password must contain at least one special character");
+                attemptCount++;
+                return false;
+            }
+
+            attemptCount = 0; // Reset attempt count on successful validation
+            return true;
+        }
+
+        function openAdmin() {
+            window.location.href = "adminlogin.html"; // Redirect to admin.html
+        }
+    </script>
+</head>
+<body>
+    <form onsubmit="return validateForm()">
+        <table border="0" bgcolor="lightblue" width="400px" height="300px">
+            <tr>
+                <td colspan="2" align="center">
+                    <h2>Login to your account</h2>
+                </td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="email" id="email" name="email" required></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="password" name="password" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Submit!</button>
+                    <button type="button" onclick="openAdmin()">Open Admin</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <a href="registration.html">Create your account</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
